@@ -1,4 +1,4 @@
-___TERMS_OF_SERVICE___
+﻿___TERMS_OF_SERVICE___
 
 By creating or modifying this file you agree to Google Tag Manager's Community
 Template Gallery Developer Terms of Service available at
@@ -175,6 +175,24 @@ scenarios:
 
     assertApi('gtmOnFailure').wasNotCalled();
     assertApi('gtmOnSuccess').wasCalled();
+- name: Should push event with correct values
+  code: |-
+    const setInWindow = require('setInWindow');
+    const mockData = {};
+    setInWindow('srtmCommands', [], true);
+
+    runCode(mockData);
+
+    const copyFromWindow = require('copyFromWindow');
+    const srtmCommands = copyFromWindow('srtmCommands');
+    assertThat(srtmCommands).isEqualTo([
+      {
+      event: "track.user.registration",
+      payload: {
+        action: "start",
+      },
+    }
+    ]);
 
 
 ___NOTES___
